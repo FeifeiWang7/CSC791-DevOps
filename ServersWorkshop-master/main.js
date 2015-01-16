@@ -20,6 +20,11 @@ var client =
 		needle.get("https://api.digitalocean.com/v2/regions", {headers:headers}, onResponse)
 	},
 
+	listImages: function( onResponse)
+	{
+		needle.get("https://api.digitalocean.com/v2/images", {headers:headers}, onResponse)
+	},
+
 	createDroplet: function (dropletName, region, imageName, onResponse)
 	{
 		var data = 
@@ -50,9 +55,14 @@ client.listRegions(function(error, response)
 {
 	var data = response.body;
 	// console.log( JSON.stringify(response.body) );
+	console.log("1. ------------------------------------------" );
 	for(var i=0; i<data.regions.length; i++)
 	{
+		var region =  data.regions[i];
+		if(region.available) console.log(region.slug);
+		else console.log("find an available region.");
 	}
+	console.log(response.headers);
 });
 
 // #############################################
@@ -61,6 +71,18 @@ client.listRegions(function(error, response)
 // https://developers.digitalocean.com/#images
 // - Print out a list of available system images, that are AVAILABLE in a specified region.
 // - use 'slug' property
+client.listImages(function(error, response)
+{
+	var data = response.body;
+	console.log("2. -------------------------------------");
+	for(var i = 0; i < data.images.length; i ++)
+	{
+		var image = data.images[i];
+		if(image.public) console.log(image.slug);
+		else console.log("find an available image.");
+	}
+	console.log(response.headers);
+});
 
 // #############################################
 // #3 Create an droplet with the specified name, region, and image

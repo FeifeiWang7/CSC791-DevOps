@@ -42,7 +42,18 @@ var client =
 		}
 		console.log("Attempting to create: "+ JSON.stringify(data) );
 
-		needle.post("https://api.digitalocean.com/v2/droplets", data, {headers:headers}, onResponse );
+		needle.post("https://api.digitalocean.com/v2/droplets", data, {headers:headers, json:true}, onResponse )
+	},
+
+	retrieveDroplet: function (dropletId,onResponse)
+	{
+		console.log("Attempting to retrieve: dropletId="+ JSON.stringify(dropletId) );
+		needle.get("https://api.digitalocean.com/v2/droplets/"+dropletId, {headers:headers,json:true}, onResponse );
+	},
+
+	deleteDroplet: function(dropletId,onResponse){
+		console.log("Attempting to delete: dropletId="+ JSON.stringify(dropletId) );
+		needle.delete("https://api.digitalocean.com/v2/droplets/"+dropletId,null,{headers:headers,json:true}, onResponse )
 	}
 };
 
@@ -71,26 +82,27 @@ client.listRegions(function(error, response)
 // https://developers.digitalocean.com/#images
 // - Print out a list of available system images, that are AVAILABLE in a specified region.
 // - use 'slug' property
-client.listImages(function(error, response)
-{
-	var data = response.body;
-	console.log("2. -------------------------------------");
-	for(var i = 0; i < data.images.length; i ++)
-	{
-		var image = data.images[i];
-		if(image.public) console.log(image.slug);
-		else console.log("find an available image.");
-	}
-	console.log(response.headers);
-});
+//client.listImages(function(error, response)
+//{
+//	var data = response.body;
+//	console.log("2. -------------------------------------");
+//	for(var i = 0; i < data.images.length; i ++)
+//	{
+//		var image = data.images[i];
+//		if(image.public) console.log(image.slug);
+//		else console.log("find an available image.");
+//	}
+//	console.log(response.headers);
+//});
 
 // #############################################
 // #3 Create an droplet with the specified name, region, and image
 // Comment out when completed. ONLY RUN ONCE!!!!!
 // Write down/copy droplet id.
-// var name = "UnityId"+os.hostname();
-// var region = ""; // Fill one in from #1
-// var image = ""; // Fill one in from #2
+//id = 3793268
+// var name = "fwang12"+os.hostname();
+// var region = "nyc3"; // Fill one in from #1
+// var image = "ubuntu-12-04-x64"; // Fill one in from #2
 // client.createDroplet(name, region, image, function(err, resp, body)
 // {
 // 	// StatusCode 202 - Means server accepted request.
@@ -107,6 +119,14 @@ client.listImages(function(error, response)
 // REMEMBER POST != GET
 // Most importantly, print out IP address!
 var dropletId = "3788359";
+//client.retrieveDroplet(dropletID, function(err, resp, body)
+//{
+//	if(!err && resp.statusCode == 202)
+//	{
+//		console.log( JSON.stringify(body, null, 3));
+//	}
+//	console.log(resp.body.droplet.networks);
+//});
 
 // #############################################
 // #5 In the command line, ping your server, make sure it is alive!
@@ -124,7 +144,13 @@ var dropletId = "3788359";
 // 	{
 //			console.log("Deleted!");
 // 	}
-
+client.deleteDroplet(dropletId,function(err,resp,body)
+{
+	if(!err && resp.statusCode == 204)
+	{
+		console.log("Deleted!");
+	}
+})
 // #############################################
 // #7 In the command line, ping your server, make sure it is dead!
 // ping xx.xx.xx.xx

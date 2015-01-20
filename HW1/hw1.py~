@@ -1,0 +1,92 @@
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "copyright", "credits" or "license()" for more information.
+>>> import boto.ec2.autoscale
+
+>>> from boto.ec2.autoscale import LaunchConfiguration
+from boto.ec2.autoscale import AutoScalingGroup
+
+>>> autoscale = boto.ec2.autoscale.AutoScaleConnection()
+ec2 = boto.ec2.connect_to_region('us-east-1')
+group = autoscale.get_all_groups
+
+>>> lc = LaunchConfiguration(name='my-launch_config', image_id='ami-a8d369c0',
+                             key_name='lab-key-pair-useast',
+
+                        )
+>>> autoscale.create_launch_configuration(lc)
+Request:06ef3fae-a05e-11e4-bb8e-211aeaa0ae86
+>>> ag = AutoScalingGroup(group_name='my_group', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1'],
+                          launch_config=lc, min_size=1, max_size=4,
+                          connection=autoscale)
+
+Traceback (most recent call last):
+  File "<pyshell#5>", line 1, in <module>
+    ag = AutoScalingGroup(group_name='my_group', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1'],
+NameError: name 'AutoScalingGroup' is not defined
+>>> ag = AutoScalingGroup(group_name='', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1'],launch_config=lc, min_size=1, max_size=4,
+                          connection=autoscale)
+
+Traceback (most recent call last):
+  File "<pyshell#6>", line 1, in <module>
+    ag = AutoScalingGroup(group_name='', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1'],launch_config=lc, min_size=1, max_size=4,
+NameError: name 'AutoScalingGroup' is not defined
+>>> from boto.ec2.autoscale import AutoScalingGroup
+>>> ag = AutoScalingGroup(group_name='my_group', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1'],
+                          launch_config=lc, min_size=1, max_size=4,
+                          connection=autoscale)
+>>> autoscale.create_auto_scaling_group(ag)
+
+Traceback (most recent call last):
+  File "<pyshell#9>", line 1, in <module>
+    autoscale.create_auto_scaling_group(ag)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/ec2/autoscale/__init__.py", line 199, in create_auto_scaling_group
+    return self._update_group('CreateAutoScalingGroup', as_group)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/ec2/autoscale/__init__.py", line 183, in _update_group
+    return self.get_object(op, params, Request)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/connection.py", line 1207, in get_object
+    raise self.ResponseError(response.status, response.reason, body)
+BotoServerError: BotoServerError: 400 Bad Request
+<ErrorResponse xmlns="http://autoscaling.amazonaws.com/doc/2011-01-01/">
+  <Error>
+    <Type>Sender</Type>
+    <Code>ValidationError</Code>
+    <Message>The availability zone [us-east-1] is not legal</Message>
+  </Error>
+  <RequestId>2836454d-a05f-11e4-8ba9-655376b5ce58</RequestId>
+</ErrorResponse>
+
+>>> ag = AutoScalingGroup(group_name='my_group', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1a'],
+                          launch_config=lc, min_size=1, max_size=4,
+                          connection=autoscale)
+>>> autoscale.create_auto_scaling_group(ag)
+Request:46482de2-a05f-11e4-808f-d5f908b1cee4
+>>> autoscale.get_all_activities(ag)
+[Activity<185b8e32-cdcc-428b-b342-0350fac9b14c>: For group:my_group, progress:Non-Windows instances with a virtualization type of 'hvm' are currently not supported for this instance type. Launching EC2 instance failed., cause:At 2015-01-20T04:46:18Z a user request created an AutoScalingGroup changing the desired capacity from 0 to 1.  At 2015-01-20T04:46:23Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1.]
+>>> ag.get_activities()
+[Activity<c059c442-3e2a-429f-8a56-e867c11c3c80>: For group:my_group, progress:Non-Windows instances with a virtualization type of 'hvm' are currently not supported for this instance type. Launching EC2 instance failed., cause:At 2015-01-20T04:47:53Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1., Activity<185b8e32-cdcc-428b-b342-0350fac9b14c>: For group:my_group, progress:Non-Windows instances with a virtualization type of 'hvm' are currently not supported for this instance type. Launching EC2 instance failed., cause:At 2015-01-20T04:46:18Z a user request created an AutoScalingGroup changing the desired capacity from 0 to 1.  At 2015-01-20T04:46:23Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1.]
+>>> ag = AutoScalingGroup(group_name='my_group', load_balancers=['my-loadbalancer'], availability_zones=['us-east-1a'],
+                          launch_config=lc, min_size=0, max_size=4,
+                          connection=autoscale)
+>>> autoscale.create_auto_scaling_group(ag)
+
+Traceback (most recent call last):
+  File "<pyshell#15>", line 1, in <module>
+    autoscale.create_auto_scaling_group(ag)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/ec2/autoscale/__init__.py", line 199, in create_auto_scaling_group
+    return self._update_group('CreateAutoScalingGroup', as_group)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/ec2/autoscale/__init__.py", line 183, in _update_group
+    return self.get_object(op, params, Request)
+  File "/usr/local/lib/python2.7/dist-packages/boto-2.35.1-py2.7.egg/boto/connection.py", line 1207, in get_object
+    raise self.ResponseError(response.status, response.reason, body)
+BotoServerError: BotoServerError: 400 Bad Request
+<ErrorResponse xmlns="http://autoscaling.amazonaws.com/doc/2011-01-01/">
+  <Error>
+    <Type>Sender</Type>
+    <Code>AlreadyExists</Code>
+    <Message>AutoScalingGroup by this name already exists - A group with the name my_group already exists</Message>
+  </Error>
+  <RequestId>ee593b9f-a05f-11e4-a815-f35077840aaa</RequestId>
+</ErrorResponse>
+
+>>> 

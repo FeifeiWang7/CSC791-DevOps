@@ -65,6 +65,11 @@ function generateTestCases()
 		// update parameter values based on known constraints.
 		var constraints = functionConstraints[funcName].constraints;
 		// Handle global constraints...		
+		var buf = _.some(constraints,{ident:'buf'});
+		var options = _.some(constraints,{ident:'options'});
+		var region = _.some(constraints,{ident:'phoneNumber'});
+		var formatString = _.some(constraints,{ident:'formatString'});
+		
 		var fileWithContent = _.some(constraints, {mocking: 'fileWithContent' });
 		var pathExists      = _.some(constraints, {mocking: 'fileExists' });
 
@@ -75,20 +80,19 @@ function generateTestCases()
 			{
 				params[constraint.ident] = constraint.value;
 			}
-			else
-			{
-				params[constraint.ident] = constraint.value;
-			}
 		}
+		console.log("!!!!!!!!!!!!");
+		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		if( pathExists || fileWithContent )
 		{
-			content += generateMockFsTestCases(pathExists,fileWithContent,funcName, args);
+			content += generateMockFsTestCases(pathExists,fileWithContent,buf, funcName, args);
 			// Bonus...generate constraint variations test cases....
-			content += generateMockFsTestCases(!pathExists,!fileWithContent,funcName, args);
-			content += generateMockFsTestCases(pathExists,!fileWithContent,funcName, args);
-			content += generateMockFsTestCases(!pathExists,fileWithContent,funcName, args);
+			content += generateMockFsTestCases(!pathExists,!fileWithContent,buf, funcName, args);
+			content += generateMockFsTestCases(pathExists,!fileWithContent,buf, funcName, args);
+			content += generateMockFsTestCases(!pathExists,fileWithContent,buf,funcName, args);
+			content += generateMockFsTestCases(pathExists,!fileWithContent,!buf,funcName, args);
 		}
 		else
 		{
@@ -114,24 +118,17 @@ function generateTestCases()
 		for( var c = 0; c < constraints.length; c++ )
 		{
 			var constraint = constraints[c];
-
 			if( params.hasOwnProperty( constraint.ident ) )
 			{
-console.log("here");
-console.log(constraint);
-				
+				console.log(constraint);
 				if(params.hasOwnProperty(constraint.inverse))
 				{
 					params[constraint.ident] = constraint.inverse;
 				}
 			}
-			else
-			{
-
-
-					params[constraint.ident] = constraint.inverse;
-			}
 		}
+		console.log("~~~~~~~~~~~~~~~");
+		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		content += "subject.{0}({1});\n".format(funcName, args );
@@ -140,7 +137,7 @@ console.log(constraint);
 	fs.writeFileSync('test.js', content, "utf8");
 }
 
-function generateMockFsTestCases (pathExists,fileWithContent,funcName,args) 
+function generateMockFsTestCases (pathExists,fileWithContent,buf,funcName,args) 
 {
 	var testCase = "";
 	// Insert mock data based on constraints.
@@ -154,6 +151,12 @@ function generateMockFsTestCases (pathExists,fileWithContent,funcName,args)
 		for (var attrname in mockFileLibrary.fileWithContent) { mergedFS[attrname] = mockFileLibrary.fileWithContent[attrname]; }
 	}
 
+	if( pathExists && !buf)
+	{
+		for (var attrname in mockFileLibrary.fileWithContent) { mergedFS[attrname] = mockFileLibrary.fileWithContent[attrname]; }
+		mergedFS['pathContent']['file1']="";
+	}
+		
 	testCase += 
 	"mock(" +
 		JSON.stringify(mergedFS)
@@ -198,6 +201,15 @@ function constraints(filePath)
 								inverse: rightHand.concat("a")
 							});
 					}
+					if(child.left.type == 'Identifier' && child.left.name == "area")
+					{
+						var rightHand = buf.substring(child.right.range[0], child.right.range[1])
+						functionConstraints[funcName].constraints.push(
+							{
+								ident: 'phoneNumber',
+								value: rightHand,
+							});
+					}
 				}
 
 				if( child.type === 'BinaryExpression' && child.operator == "<")
@@ -216,14 +228,15 @@ function constraints(filePath)
 				if( child.type === 'BinaryExpression' && child.operator == ">")
 				{
 					//if( (child.left.type == 'MemberExpression') && (child.left.property.name == 'length'))
+					// if( (child.left.type == 'MemberExpression') && (params.indexOf(child.left.object.name)>-1))
 					if( child.left.type == 'MemberExpression')
 					{
 						var rightHand = buf.substring(child.right.range[0], child.right.range[1])
 						functionConstraints[funcName].constraints.push( 
 							{
 								ident: child.left.object.name,
-								value: rightHand + 1,
-								inverse: rightHand
+								value: rightHand + Math.random(),
+								inverse: rightHand - Math.random()
 							});
 					}
 				}

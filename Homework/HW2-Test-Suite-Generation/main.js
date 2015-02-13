@@ -18,7 +18,7 @@ function main()
 
 	constraints(filePath);
 
-	generateTestCases1();
+	generateTestCases();
 }
 
 
@@ -48,9 +48,8 @@ var mockFileLibrary =
 	}
 };
 
-function generateTestCases1()
+function generateTestCases()
 {
-
 	var content = "var subject = require('./subject.js')\nvar mock = require('mock-fs');\n";
 	for ( var funcName in functionConstraints )
 	{
@@ -63,15 +62,9 @@ function generateTestCases1()
 			//params[paramName] = '\'' + faker.phone.phoneNumber()+'\'';
 			params[paramName] = '\'\'';
 		}
-
-		//console.log( params );
-
 		// update parameter values based on known constraints.
 		var constraints = functionConstraints[funcName].constraints;
-		// Handle global constraints...
-		var varp = _.some(constraints,{ident:'p'});
-		var varq = _.some(constraints,{ident:'q'});
-		
+		// Handle global constraints...		
 		var fileWithContent = _.some(constraints, {mocking: 'fileWithContent' });
 		var pathExists      = _.some(constraints, {mocking: 'fileExists' });
 
@@ -80,10 +73,11 @@ function generateTestCases1()
 			var constraint = constraints[c];
 			if( params.hasOwnProperty( constraint.ident ) )
 			{
-				console.log(constraint);
 				params[constraint.ident] = constraint.value;
 			}
 		}
+		console.log("!!!!!!!!!!!!");
+		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		if( pathExists || fileWithContent )
@@ -100,7 +94,7 @@ function generateTestCases1()
 			content += "subject.{0}({1});\n".format(funcName, args );
 		}
 	}
-	////////////////
+	////////////////another separate pass for inverse test cases
 	for ( var funcName in functionConstraints )
 	{
 		var params = {};
@@ -111,10 +105,7 @@ function generateTestCases1()
 			params[paramName] = '\'\'';
 		}
 		var constraints = functionConstraints[funcName].constraints;
-		// Handle global constraints...
-		var varp = _.some(constraints,{ident:'p'});
-		var varq = _.some(constraints,{ident:'q'});
-		
+		// Handle global constraints...		
 		var fileWithContent = _.some(constraints, {mocking: 'fileWithContent' });
 		var pathExists      = _.some(constraints, {mocking: 'fileExists' });
 
@@ -123,12 +114,15 @@ function generateTestCases1()
 			var constraint = constraints[c];
 			if( params.hasOwnProperty( constraint.ident ) )
 			{
+				console.log(constraint);
 				if(params.hasOwnProperty(constraint.inverse))
 				{
 					params[constraint.ident] = constraint.inverse;
 				}
 			}
 		}
+		console.log("~~~~~~~~~~~~~~~");
+		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		content += "subject.{0}({1});\n".format(funcName, args );
@@ -210,7 +204,33 @@ function constraints(filePath)
 							});
 					}
 				}
-				
+				if( child.type === 'BinaryExpression' && child.operator == ">")
+				{
+					//if( (child.left.type == 'MemberExpression') && (child.left.property.name == 'length'))
+					// if( (child.left.type == 'MemberExpression') && (params.indexOf(child.left.object.name)>-1))
+					if( child.left.type == 'MemberExpression')
+					{
+						console.log("*****");
+						var rightHand = buf.substring(child.right.range[0], child.right.range[1])
+						functionConstraints[funcName].constraints.push( 
+							{
+								ident: child.left.object.name.concat(child.left.property.name),
+								value: rightHand + Math.random(),
+								inverse: rightHand - Math.random()
+							});
+					}
+				}
+				if( child.type === 'LogicalExpression' && child.operator == "||")
+				{
+					if((child.right.type == 'UnaryExpression') && (child.right.argument.type == 'MemberExpression'))
+					{
+						functionConstraints[funcName].constraints.push( 
+							{
+								ident: child.right.argument.object.name,
+								value: '{normalize: true}'
+							});
+					}
+				}
 				if( child.type == "CallExpression" && 
 					 child.callee.property &&
 					 child.callee.property.name =="readFileSync" )

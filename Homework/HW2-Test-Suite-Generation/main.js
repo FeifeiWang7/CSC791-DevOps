@@ -75,9 +75,11 @@ function generateTestCases()
 			{
 				params[constraint.ident] = constraint.value;
 			}
+			else
+			{
+				params[constraint.ident] = constraint.value;
+			}
 		}
-		console.log("!!!!!!!!!!!!");
-		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		if( pathExists || fileWithContent )
@@ -112,17 +114,24 @@ function generateTestCases()
 		for( var c = 0; c < constraints.length; c++ )
 		{
 			var constraint = constraints[c];
+
 			if( params.hasOwnProperty( constraint.ident ) )
 			{
-				console.log(constraint);
+console.log("here");
+console.log(constraint);
+				
 				if(params.hasOwnProperty(constraint.inverse))
 				{
 					params[constraint.ident] = constraint.inverse;
 				}
 			}
+			else
+			{
+
+
+					params[constraint.ident] = constraint.inverse;
+			}
 		}
-		console.log("~~~~~~~~~~~~~~~");
-		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		content += "subject.{0}({1});\n".format(funcName, args );
@@ -207,16 +216,14 @@ function constraints(filePath)
 				if( child.type === 'BinaryExpression' && child.operator == ">")
 				{
 					//if( (child.left.type == 'MemberExpression') && (child.left.property.name == 'length'))
-					// if( (child.left.type == 'MemberExpression') && (params.indexOf(child.left.object.name)>-1))
 					if( child.left.type == 'MemberExpression')
 					{
-						console.log("*****");
 						var rightHand = buf.substring(child.right.range[0], child.right.range[1])
 						functionConstraints[funcName].constraints.push( 
 							{
-								ident: child.left.object.name.concat(child.left.property.name),
-								value: rightHand + Math.random(),
-								inverse: rightHand - Math.random()
+								ident: child.left.object.name,
+								value: rightHand + 1,
+								inverse: rightHand
 							});
 					}
 				}

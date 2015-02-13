@@ -1,5 +1,5 @@
 TN:
-SF:/Users/feifei/Documents/CSC791-DevOps/Homework/HW2-Test-Suite-Generation/test.js
+SF:/home/feifei/Desktop/DevOps/CSC791-DevOps/Homework/HW2-Test-Suite-Generation/test.js
 FNF:0
 FNH:0
 DA:1,1
@@ -31,7 +31,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/feifei/Documents/CSC791-DevOps/Homework/HW2-Test-Suite-Generation/subject.js
+SF:/home/feifei/Desktop/DevOps/CSC791-DevOps/Homework/HW2-Test-Suite-Generation/subject.js
 FN:3,inc
 FN:15,fileTest
 FN:32,normalize

@@ -1,0 +1,23 @@
+var subject = require('./subject.js')
+var mock = require('mock-fs');
+subject.inc(-0.3346034176647663,undefined);
+mock({"path/fileExists":{},"pathContent":{"file1":"text content"}});
+	subject.fileTest('path/fileExists','pathContent/file1');
+mock.restore();
+mock({});
+	subject.fileTest('path/fileExists','pathContent/file1');
+mock.restore();
+mock({"path/fileExists":{}});
+	subject.fileTest('path/fileExists','pathContent/file1');
+mock.restore();
+mock({"pathContent":{"file1":"text content"}});
+	subject.fileTest('path/fileExists','pathContent/file1');
+mock.restore();
+subject.normalize('');
+subject.format('','','');
+subject.blackListNumber('');
+subject.inc('','');
+subject.fileTest('','');
+subject.normalize('');
+subject.format('','','');
+subject.blackListNumber('');

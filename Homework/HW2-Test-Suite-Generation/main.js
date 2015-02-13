@@ -68,7 +68,6 @@ function generateTestCases()
 		var buf = _.some(constraints,{ident:'buf'});
 		var options = _.some(constraints,{ident:'options'});
 		var region = _.some(constraints,{ident:'phoneNumber'});
-		var formatString = _.some(constraints,{ident:'formatString'});
 		
 		var fileWithContent = _.some(constraints, {mocking: 'fileWithContent' });
 		var pathExists      = _.some(constraints, {mocking: 'fileExists' });
@@ -81,8 +80,6 @@ function generateTestCases()
 				params[constraint.ident] = constraint.value;
 			}
 		}
-		console.log("!!!!!!!!!!!!");
-		console.log(params);
 		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		if( pathExists || fileWithContent )
@@ -93,6 +90,29 @@ function generateTestCases()
 			content += generateMockFsTestCases(pathExists,!fileWithContent,buf, funcName, args);
 			content += generateMockFsTestCases(!pathExists,fileWithContent,buf,funcName, args);
 			content += generateMockFsTestCases(pathExists,!fileWithContent,!buf,funcName, args);
+		}
+		else if(options)
+		{
+			args = args.split(',');
+			args[0]="'"+faker.phone.phoneNumberFormat().toString()+"'";
+			args[1]="'"+faker.phone.phoneFormats().toString()+"'";
+			if(!options)
+			{
+					args[2]="false";
+			}
+			content += "subject.{0}({1});\n".format(funcName, args);
+		}
+		else if(region)
+		{
+			var number=faker.phone.phoneNumberFormat().toString();
+			args=args.split(',');
+			args[0] = args[0].substring(1,4);
+			if(region)
+			{
+					number=args[0] + number.substring(3,12);
+			}
+			args[0]="'"+number+"'";
+			content += "subject.{0}({1});\n".format(funcName, args);
 		}
 		else
 		{
@@ -111,10 +131,6 @@ function generateTestCases()
 			params[paramName] = '\'\'';
 		}
 		var constraints = functionConstraints[funcName].constraints;
-		// Handle global constraints...		
-		var fileWithContent = _.some(constraints, {mocking: 'fileWithContent' });
-		var pathExists      = _.some(constraints, {mocking: 'fileExists' });
-
 		for( var c = 0; c < constraints.length; c++ )
 		{
 			var constraint = constraints[c];
@@ -127,9 +143,6 @@ function generateTestCases()
 				}
 			}
 		}
-		console.log("~~~~~~~~~~~~~~~");
-		console.log(params);
-		// Prepare function arguments.
 		var args = Object.keys(params).map( function(k) {return params[k]; }).join(",");
 		content += "subject.{0}({1});\n".format(funcName, args );
 	}

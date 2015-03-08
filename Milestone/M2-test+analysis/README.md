@@ -95,6 +95,8 @@ If there is any error that is about "missing semicolon", we reject that commit a
 
 Output if cannot pass the criteria
 
+Testing criteria
+
 	Check Commit Script start now
 	--------Running Istanbul
 	=============================================================================
@@ -113,6 +115,8 @@ Output if cannot pass the criteria
 	Statements Coverage is higher than  50 %! Pass!
 	Branches Coverage is less than  50 %.
 	!!!Failed to commit!!! Please check the test.txt for references
+
+Analysis criteria
 
 	Check Commit Script start now
 	--------Running Istanbul

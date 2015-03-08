@@ -114,7 +114,6 @@ Output if cannot pass the criteria
 	Branches Coverage is less than  50 %.
 	!!!Failed to commit!!! Please check the test.txt for references
 
-
 	Check Commit Script start now
 	--------Running Istanbul
 	=============================================================================

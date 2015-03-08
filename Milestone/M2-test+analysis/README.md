@@ -93,9 +93,7 @@ If there is any error that is about "missing semicolon", we reject that commit a
 
 #### The ability to reject a commit if it fails a minimum testing criteria and analysis criteria.
 
-Output if cannot pass the criteria
-
-Testing criteria
+Output if cannot pass the testing criteria
 
 	Check Commit Script start now
 	--------Running Istanbul
@@ -116,7 +114,7 @@ Testing criteria
 	Branches Coverage is less than  50 %.
 	!!!Failed to commit!!! Please check the test.txt for references
 
-Analysis criteria
+Output if cannot pass the analysis criteria
 
 	Check Commit Script start now
 	--------Running Istanbul

@@ -43,10 +43,15 @@ So the content of pre-commit is simple
 	echo "call test.sh"
 	sh ./test.sh
 
-
 ### Analysis
 
-#### Less than 50% coverage of any kind in Coverage Report
+#### The ability to improve testing coverage using one of the techniques covered in class: constraint-based test generation, fuzzing, etc. You can use an existing tool or implement your own approach.
+
+The ability to run an existing static analysis tool on the source code (e.g. FindBugs, PMD, CheckStyle, NCover, Lint, etc.), process its results, and report its findings.
+
+The ability to extend an existing analysis tool with a custom rule, or implement a new analysis. For example, you could write a static analysis that checks for the ratio of comments to code, or finds parse errors in SQL string statements. You could introduce security checks, a dynamic analysis, a data-flow analysis or a data-flow based test coverage.
+
+The ability to reject a commit if it fails a minimum testing criteria (e.g. failed test case, or less than 50% statement coverage) and analysis criteria (e.g. cannot commits that generate a particular FindBugs rule, such as "Method concatenates strings using + in a loop").Less than 50% coverage of any kind in Coverage Report
 We have used the Shell Script to get the result from test.txt, as mentioned in Test Section. If there is some coverage which is lower than 50%. We deny that commit and output the error infomation.
 The following are the sample result:
 

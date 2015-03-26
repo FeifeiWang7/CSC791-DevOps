@@ -1,1 +1,1 @@
-GIT_WORK_TREE=/Users/feifei/Desktop/791/CSC791-DevOps/Workshop/W6-Deployment/blue-www/ git checkout -f
+GIT_WORK_TREE="/Users/feifei/Desktop/791/CSC791-DevOps/Workshop/W6-Deployment/blue-www/" git checkout -f

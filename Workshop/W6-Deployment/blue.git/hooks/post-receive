@@ -1,0 +1,1 @@
+GIT_WORK_TREE=$ROOT/deflight/deploy/blue-www/ git checkout -f

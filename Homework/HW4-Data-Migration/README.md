@@ -6,9 +6,11 @@ Minimize downtime - The blue-green deployment approach ensures that there are tw
 Rollback - If anything goes wrong, just switch the router back to the other environment. 
  
 ### Complete git/hook setup
-
+<img src="pics/1.png"/>
 ### Create blue/green infrastructure
-
+<img src="pics/2.png"/>
+<img src="pics/3.png"/>
+<img src="pics/4.png"/>
 ### Demonstrate /switch route
 
 ### Demonstrate migration of data on switch

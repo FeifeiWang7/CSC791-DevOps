@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Running Deployment"
+
+touch file
+node deployments/infrastructure.js

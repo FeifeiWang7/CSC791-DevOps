@@ -12,7 +12,8 @@ Rollback - If anything goes wrong, just switch the router back to the other envi
 <img src="pics/3.png"/>
 <img src="pics/4.png"/>
 ### Demonstrate /switch route
-
+<img src="pics/5.png"/>
 ### Demonstrate migration of data on switch
-
+<img src="pics/5.png"/>
 ### Demonstrate mirroring
+<img src="pics/6.png"/>

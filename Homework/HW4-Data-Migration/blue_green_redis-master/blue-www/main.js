@@ -16,8 +16,8 @@ app.get('/switch',function(req,res){
 	client.set("switch","1");
 })
 app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
-	console.log(req.body) // form fields
-	console.log(req.files) // form files
+	console.log(req.body) 
+	console.log(req.files)
 
 	if( req.files.image )
 	{
@@ -25,15 +25,12 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
 			if (err) throw err;
 			var img = new Buffer(data).toString('base64');
 			client.lpush("myimg",img)
-			//console.log(img);
 		});
 	}
-
 	res.status(204).end()
 }]);
-
 app.get('/meow', function(req, res) {
-	{
+{
 		client.lpush("myPages",req.url)
 		client.lrange("myimg",0,1,function(err,items){
 			var imagedata=items[0]
@@ -45,6 +42,5 @@ var server = app.listen(PORT, function () {
 
 	var host = server.address().address
 	var port = server.address().port
-
 	console.log('Example app listening at http://%s:%s', host, port)
 });

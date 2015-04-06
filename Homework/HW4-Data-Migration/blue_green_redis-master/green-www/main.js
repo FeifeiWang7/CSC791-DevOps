@@ -14,26 +14,20 @@ app.get('/', function(req, res)
 app.get('/switch',function(req,res){
 	res.redirect('/');
 	client.set("switch","1");
-	//res.status(500).send('Something has broken!');
-
 })
 app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
-	console.log(req.body) // form fields
-	console.log(req.files) // form files
-
+	console.log(req.body)
+	console.log(req.files)
 	if( req.files.image )
 	{
 		fs.readFile( req.files.image.path, function (err, data) {
 			if (err) throw err;
 			var img = new Buffer(data).toString('base64');
 			client.lpush("myimg",img)
-			//console.log(img);
 		});
 	}
-
 	res.status(204).end()
 }]);
-
 app.get('/meow', function(req, res) {
 	{
 		client.lpush("myPages",req.url)
@@ -44,9 +38,7 @@ app.get('/meow', function(req, res) {
 	}
 })
 var server = app.listen(PORT, function () {
-
 	var host = server.address().address
 	var port = server.address().port
-
 	console.log('Example app listening at http://%s:%s', host, port)
 });

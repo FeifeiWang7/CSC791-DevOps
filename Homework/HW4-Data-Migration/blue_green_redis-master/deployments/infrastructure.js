@@ -13,8 +13,7 @@ var TARGET = BLUE;
 var mirror=true;
 var infrastructure =
 {
-    setup: function () {
-        // Proxy.
+        setup: function () {
 		blueclient.del("myimg");
 		greenclient.del("myimg");
 		blueclient.del("switch");
@@ -26,21 +25,12 @@ var infrastructure =
             proxy.web(req, res, {target: TARGET});
         });
         server.listen(8181);
-
-        // Launch blue slice
-
+		
         exec('forever start -w --watchDirectory ../blue-www ../blue-www/main.js 9090');
         console.log("blue slice");
 
-        // Launch green slice
         exec('forever start -w --watchDirectory ../green-www ../green-www/main.js 5060');
         console.log("green slice");
-
-        //exec('forever start ../../redis-2.8.19/src/redis-server --port 6379');
-        //console.log("blue redis start up");
-        //
-        //exec('forever start ../../redis-2.8.19/src/redis-server --port 6380');
-        //console.log("green redis start up");
 
 		function migrate(target){
 			if(target==GREEN){
@@ -79,7 +69,6 @@ var infrastructure =
                     });
 					console.log("switch to green "+GREEN);
 					blueclient.del("switch");
-					// blueclient.get("switch",function(err,value){console.log(value)});
 					if(mirror==false) migrate(GREEN);
 				}
 			})
@@ -91,7 +80,6 @@ var infrastructure =
                     });
 					console.log("switch to blue "+BLUE);
 					greenclient.del("switch");
-					// greenclient.get("switch",function(err,value){console.log(value)})
 					if(mirror==false) migrate(BLUE);
 				}
 			})
@@ -115,11 +103,9 @@ var infrastructure =
                         blue_flag=1;
                         init_blue=num;
 						add=num-init_blue;
-                        // console.log("####blue flag "+blue_flag+" green flag "+green_flag);
                     }
                 }
             );
-			// console.log("-------blue flag "+blue_flag+" green flag "+green_flag);
             greenclient.llen('myimg',function(err,num){
                     if(num>init_green){
                         green_flag=1;
@@ -158,14 +144,6 @@ var infrastructure =
             var onChange=setInterval(dup,1*1000);
         }
 
-
-//setTimeout
-//var options = 
-//{
-//  url: "http://localhost:8080",
-//};
-//request(options, function (error, res, body) {
-
     },
 
     teardown: function () {
@@ -178,7 +156,6 @@ var infrastructure =
 }
 
 infrastructure.setup();
-// Make sure to clean up.
 process.on('exit', function () {
     infrastructure.teardown();
 });

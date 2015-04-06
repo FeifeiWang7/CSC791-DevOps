@@ -17,3 +17,5 @@ Rollback - If anything goes wrong, just switch the router back to the other envi
 <img src="pics/5.png"/>
 ### Demonstrate mirroring
 <img src="pics/6.png"/>
+
+I studied with Jesse on this homework.

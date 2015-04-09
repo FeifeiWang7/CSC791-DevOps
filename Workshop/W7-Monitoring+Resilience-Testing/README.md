@@ -48,6 +48,6 @@ Modify `function measureLatenancy()` to calculate the time between making a requ
 
 ### Chaos Monkey
 
-**Chaos Monkey**, a tool that randomly disables our production instances to make sure we can survive this common type of failure without any customer impact. The name comes from the idea of unleashing a wild monkey with a weapon in your data center (or cloud region) to randomly shoot down instances and chew through cables -- all the while we continue serving our customers without interruption.
+**Chaos Monkey**(https://github.com/Netflix/SimianArmy), a tool that randomly disables our production instances to make sure we can survive this common type of failure without any customer impact. The name comes from the idea of unleashing a wild monkey with a weapon in your data center (or cloud region) to randomly shoot down instances and chew through cables -- all the while we continue serving our customers without interruption.
 
 *Implement a basic Chaos Monkey by blocking routes to a specific server.*

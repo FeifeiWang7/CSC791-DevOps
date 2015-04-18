@@ -18,6 +18,24 @@ Cucumber tool offers a way to write tests that anybody can understand, regardles
 * quick and easy set up and execution
 * efficient tool for testing
 
+##### Cucumber Installation
+Install Ruby
+
+	go to http://rubyinstaller.org/downloads/
+ 
+Install Ruby Development Kit
+
+	go to http://rubyinstaller.org/downloads/
+
+Install Cucumber
+
+	gem install cucumber
+	cucumber -version
+
+Install Ansicon
+Install Watir
+Install rspec
+
 #### Extended Analysis
 
 #### References

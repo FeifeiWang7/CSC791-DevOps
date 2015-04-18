@@ -1,4 +1,4 @@
-/* Learned from JesseXu*/
+/* Learned from JesseXu, backup here to learn */
 var http = require('http');
 var httpProxy = require('http-proxy');
 var exec = require('child_process').exec; 
@@ -138,6 +138,7 @@ var infrastructure =
 		var onChange=setInterval(dup,1*1000);
         }
     },
+////////
     teardown: function () {
         exec('forever stopall', function () {
             console.log("infrastructure shutdown");
@@ -145,15 +146,7 @@ var infrastructure =
         });
     },
 }
-
 infrastructure.setup();
-process.on('exit', function () {
-    infrastructure.teardown();
-});
-process.on('SIGINT', function () {
-    infrastructure.teardown();
-});
-process.on('uncaughtException', function (err) {
-    console.log(err);
-    infrastructure.teardown();
-});
+process.on('exit', function () { infrastructure.teardown(); });
+process.on('SIGINT', function () { infrastructure.teardown(); });
+process.on('uncaughtException', function (err) { console.log(err); infrastructure.teardown(); });

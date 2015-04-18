@@ -10,7 +10,7 @@ Set up two redis instances for infrastructure.js to connect, and act as two real
 		
 cd into the deployment folder and run:
 		 
-		npm install -g forever
+		sudo npm install -g forever
 		npm install redis
 		npm install
 

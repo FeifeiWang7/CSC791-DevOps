@@ -9,7 +9,7 @@ var PORT = args[0];
 
 app.get('/', function(req, res)
 {
-	res.send('Hello Blue!!');
+	res.send('Hello Blue :D');
 });
 app.get('/switch',function(req,res)
 {
@@ -38,9 +38,9 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res)
 	console.log(req.body) // form fields
 	console.log(req.files) // form files
 
-	if( req.files.image )
+	if(req.files.image)
 	{
-		fs.readFile( req.files.image.path, function (err, data) {
+		fs.readFile(req.files.image.path, function (err, data) {
 			if (err) throw err;
 			var img = new Buffer(data).toString('base64');
 			console.log(img);
@@ -50,18 +50,18 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res)
 	res.status(204).end()
 }]);
 app.get('/meow', function(req, res) {
- 	{
-		var imagedata
-		res.writeHead(200, {'content-type':'text/html'});
-		var imgs=client.lrange("myimg",0,0,function(error,items){
-			items.forEach(function(item){
-				imagedata=item
-				client.lpop("myimg")
-    			res.write("<h1>\n<img src='data:my_pic.jpg;base64,"+imagedata+"'/>");
-			})
- 			res.end();
-		})
-	}
+        {
+                var imagedata
+                res.writeHead(200, {'content-type':'text/html'});
+                var imgs=client.lrange("myimg",0,0,function(error,items){
+                        items.forEach(function(item){
+                                imagedata=item
+                                client.lpop("myimg")
+                        res.write("<h1>\n<img src='data:shohoku.jpg;base64,"+imagedata+"'/>");
+                        })
+                        res.end();
+                })
+        }
 })
 var server = app.listen(PORT, function () {
 

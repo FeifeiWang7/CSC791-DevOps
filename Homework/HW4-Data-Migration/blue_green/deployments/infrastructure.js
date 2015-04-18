@@ -1,20 +1,22 @@
 /* Learned from JesseXu*/
 var http = require('http');
 var httpProxy = require('http-proxy');
-var exec = require('child_process').exec; // 
+var exec = require('child_process').exec; 
 var request = require("request");
 var redis = require('redis')
 
-var GREEN = 'http://127.0.0.1:5060';
-var BLUE = 'http://127.0.0.1:9090';
-var greenclient = redis.createClient(6380, '127.0.0.1', {})
-var blueclient = redis.createClient(6379, '127.0.0.1', {})
+var GREEN = 'http://127.0.0.1:' + process.argv[2];
+var BLUE = 'http://127.0.0.1:' + process.argv[3];
+var greenclient = redis.createClient(argv[4], '127.0.0.1', {})
+var blueclient = redis.createClient(argv[5], '127.0.0.1', {})
+
 var TARGET = BLUE;
-var mirror=true;
+var mirror=true; //change to false ... 
+
 var infrastructure =
 {
         setup: function () {
-		blueclient.del("myimg");
+		blueclient.del("myimg"); //from Jesse
 		greenclient.del("myimg");
 		blueclient.del("switch");
 		greenclient.del("switch");
@@ -33,7 +35,7 @@ var infrastructure =
 		function migrate(target){
 			if(target==GREEN){
        		        	blueclient.llen("myimg",function(error,num){
-        	        		console.log("Migrating to Green Begin!! Copying "+num+" data")
+        	        		console.log("Start migrating to Green ... Copying "+ num + " data")
                 	        	if(num!=0){
                         			(blueclient.lrange("myimg",0,-1,function(err,items){
                             				if(err) throw err;
@@ -46,7 +48,7 @@ var infrastructure =
 			}
 			else{
                 		greenclient.llen("myimg",function(error,num){
-                    			console.log("Migrating to Blue Begin!! Copying "+num+" data")
+                    			console.log("Start migrating to Blue ... Copying " + num + " data")
                     			if(num!=0){
                         			(greenclient.lrange("myimg",0,-1,function(err,items){
                             				if(err) throw err;
@@ -65,7 +67,7 @@ var infrastructure =
                     			server = http.createServer(function (req, res) {
                         			proxy.web(req, res, {target: TARGET});
                     			});
-					console.log("switch to green "+GREEN);
+					console.log("Switch to green "+GREEN);
 					blueclient.del("switch");
 					if(mirror==false) migrate(GREEN);
 				}
@@ -76,7 +78,7 @@ var infrastructure =
                     			server = http.createServer(function (req, res) {
                         			proxy.web(req, res, {target: TARGET});
                     			});
-					console.log("switch to blue "+BLUE);
+					console.log("Switch to blue "+BLUE);
 					greenclient.del("switch");
 					if(mirror==false) migrate(BLUE);
 				}

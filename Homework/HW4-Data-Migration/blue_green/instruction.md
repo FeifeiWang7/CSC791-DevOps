@@ -1,4 +1,5 @@
 ## Deployments with Blue & Green Redis
+Modified from Jesse Xu. Backup here to learn.
 
 #### Set up Environment
 

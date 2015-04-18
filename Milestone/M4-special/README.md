@@ -36,6 +36,27 @@ Install Ansicon
 Install Watir
 Install rspec
 
+##### Cucumber Basics
+Two files (Features and Step Definition) are needed to execute a Cucumber test scenario. Feature file contains high level description of the test scenario in simple language. Step definition file contains the actual code to execute the test scenario in the Features file.
+
+Directory
+
+	features
+		---- step_definition
+		---- support directories
+
+Feature file consists of the following components
+
+* Feature: A feature would describethe current test script which has to be executed.
+* Scenario: Scenario describes the steps and expected outcome for a particular test case.
+* Scenario Outline: Same scenario an be executed for multiple sets of data using scenario outline. The data is provided by a tabular structure.
+* Given: It specifies the context of the text to be executed. By using datatables "Given", step can also be parameterized.
+* When: "When" specifies the test action that has to be performed.
+* Then: The expected outcome of the test can be represented by "Then"
+
+Step definition maps the test case steps in the feature files (Given/When/Then) to code, which executes and checks the outcomes from the system under test. For a step definition to be executed, it must match the given component in a feature. Step definition is defined in ruby files under "features/step_definitions/*_steps.rb".
+
+ 
 #### Extended Analysis
 
 #### References

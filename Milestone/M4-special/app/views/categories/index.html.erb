@@ -1,0 +1,28 @@
+<div style="color:white"><h1>Existing Job Categories</h1>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>Category name</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.category_name %></td>
+        <td><%= %></td>
+        <td><%= link_to 'Edit', edit_category_path(category) %></td>
+        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<br>
+
+<%= link_to 'New Job Category', new_category_path %>
+</div>

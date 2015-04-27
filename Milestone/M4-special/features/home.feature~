@@ -1,0 +1,8 @@
+ Feature: Home Dashboard 
+  
+  Scenario: Jobseeker Login
+    Given I'm on the home page
+    When I go to Jobseeker Login
+    Then I should see Job Seeker Login Page 
+    
+ 

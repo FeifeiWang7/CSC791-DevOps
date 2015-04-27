@@ -1,0 +1,11 @@
+ Feature: Admin Dashboard 
+  In order to manage my employers 
+  As the admin of the DireWolf 
+  I want to have an admin dashboard 
+  
+  Scenario: Listing All JobSeekers Employers and Admins
+    Given I logged in as admin 
+    When I visit Set up Account section 
+    Then I should see all current jobseekers employers and admins 
+    
+ 

@@ -1,42 +1,53 @@
+
+
 Given /^I'm on the home page$/ do
   visit ('/')
 end
+
 When /^I go to Job Seeker Login$/ do
   visit ('/users/sign_in')
 end
+
 When /^I go to Employer Login$/ do
   visit ('/employers/sign_in')
 end
+
 When /^I go to Admin Login$/ do
   visit ('/admins/sign_in')
 end
+
 When /^I go to Contact Us$/ do
   visit ('/contact/view')
 end
+
 Then /^I should see Emails and Password are required to log in as a job seeker$/ do
   page.should have_content("Job Seeker Log in")
   page.should have_content("Email")
   page.should have_content("Password")
   page.should have_content("Log in")
 end
+
 Then /^I should see Emails and Password are required to log in as an employer$/ do
   page.should have_content("Employer Log in")
   page.should have_content("Email")
   page.should have_content("Password")
   page.should have_content("Log in")
 end
+
 Then /^I should see Emails and Password are required to log in as an admin$/ do
   page.should have_content("Admin Log in")
   page.should have_content("Email")
   page.should have_content("Password")
   page.should have_content("Log in")
 end
+
 Then /^I should see contact information$/ do
   page.should have_content("Author: Shiqian Xu, Miaohua Liu, Qiyu Zhou")
   page.should have_content("Existing JobSeeker Account:")
   page.should have_content("Existing Employer Account:")
   page.should have_content("Existing Admin Account:")
 end
+
 # When /^I should go to (.+)$/ do |page_name|
 #   visit path_to(page_name)
 # end

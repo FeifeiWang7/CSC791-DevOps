@@ -1,0 +1,16 @@
+diff --git a/.reviewboardrc b/.reviewboardrc
+index baacb61..212bbb4 100644
+--- a/.reviewboardrc
++++ b/.reviewboardrc
+@@ -1,4 +1,4 @@
+ REVIEWBOARD_URL = "52.6.107.74/rev"
+ REPOSITORY = "DireWolf"
+ BRANCH = "master"
+-LAND_DEST_BRANCH = "production"
++LAND_DEST_BRANCH = "master"
+diff --git a/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af b/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af
+index 0d27d7e..2d4f8db 100755
+Binary files a/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af and b/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af differ
+diff --git a/tmp/cache/assets/development/sprockets/f7cbd26ba1d28d48de824f0e94586655 b/tmp/cache/assets/development/sprockets/f7cbd26ba1d28d48de824f0e94586655
+index 0d27d7e..2d4f8db 100755
+Binary files a/tmp/cache/assets/development/sprockets/f7cbd26ba1d28d48de824f0e94586655 and b/tmp/cache/assets/development/sprockets/f7cbd26ba1d28d48de824f0e94586655 differ

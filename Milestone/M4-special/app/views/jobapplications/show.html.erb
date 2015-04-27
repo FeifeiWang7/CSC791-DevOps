@@ -1,0 +1,39 @@
+<div style="color:white; "><p id="notice"><%= notice %></p>
+<p>
+    <h1>Job Application:</h1>
+</p>
+<p>
+  <strong>Job name:</strong>
+  <%= @jobapplication.job_name %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @jobapplication.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @jobapplication.email %>
+</p>
+<p>
+  <strong>Major:</strong>
+  <%= @jobapplication.major %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @jobapplication.phone %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @jobapplication.status %>
+</p>
+
+<p>
+  <strong>Coverletter:</strong>
+  <%= @jobapplication.coverletter %>
+</p>
+
+<%= link_to 'Back', jobapplications_path %>
+</div>

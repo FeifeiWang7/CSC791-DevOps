@@ -1,0 +1,35 @@
+<div style="color: white;"><h1>Applications on this Job</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th><div style="color:white;font:bold 120% sans-serif;">Name</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Email</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Phone</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Major</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Cover Letter</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Apply time</div></th>
+    <th><div style="color:white;font:bold 120% sans-serif;">Current Status</div></th>
+    <!--<th><div style="color:white;font:bold 120% sans-serif;">Update</div></th>-->
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @jobapplications.each do |jobapplication| %>
+      <tr class="<%= cycle('list_line_odd','list_line_odd') %>">
+        <td><%= jobapplication.name %></td>
+        <td><%= jobapplication.email %></td>
+        <td><%= jobapplication.phone %></td>
+        <td><%= jobapplication.major %></td>
+        <td><%= jobapplication.coverletter %></td>
+        <td><%= jobapplication.created_at %></td>
+        <td><%= jobapplication.status %></td>
+        <td><%= link_to 'Pending',appllist_update_status_path(:jobapplication_id=>jobapplication,:update_status=>"Pending")%></td>
+        <td><%= link_to 'Under Review',appllist_update_status_path(:jobapplication_id=>jobapplication,:update_status=>"Under Review")%></td>
+        <td><%= link_to 'Future Interview',appllist_update_status_path(:jobapplication_id=>jobapplication,:update_status=>"Future Interview")%></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,20 @@
+<div style="color:white; "><h1>Account</h1>
+  <div style="color:white; "><h2>If you want to delete account, you have to login that account</h2> </div>
+<p>Existing JobSeeker Account:</p>
+<% @users.each do|user| %>
+    <p><%= user.email %></p>
+<% end %>
+<p><%= link_to "Create Employer", new_employer_registration_path, :class => 'navbar-link'  %></p>
+
+<p>Existing Employer Account:</p>
+<% @employers.each do|employer| %>
+   <p><%="employer Name:"%><%= employer.employer_name %><%="\t employer Email:"%><%= employer.email %> </p>
+
+<% end %>
+
+<p><%= link_to "Create Admin", new_admin_registration_path, :class => 'navbar-link'  %></p>
+<p>Existing Admin Account:</p>
+<% @admins.each do|admin| %>
+   <p><%= admin.email %></p>
+<% end %>
+</div>

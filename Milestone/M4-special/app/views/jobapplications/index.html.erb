@@ -1,0 +1,35 @@
+<div style="color:white; "><h1>Jobs You have Applied</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Job name</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Major</th>
+      <th>Phone</th>
+      <th>Coverletter</th>
+      <th>Status</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jobapplications.each do |jobapplication| %>
+      <tr>
+        <td><%= jobapplication.job_name %></td>
+        <td><%= jobapplication.name %></td>
+        <td><%= jobapplication.email %></td>
+        <td><%= jobapplication.major %></td>
+        <td><%= jobapplication.phone %></td>
+        <td><%= jobapplication.coverletter %></td>
+        <td><%= jobapplication.status %></td>
+        <td><%= link_to 'View the Application',jobapplication%></td>
+        <td><%= link_to 'Withdraw the Application', jobapplication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>

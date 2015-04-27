@@ -1,0 +1,45 @@
+
+<% if notice %>
+    <p id="notice"><%= notice %></p>
+<% end %>
+
+<div style="color:white;border-bottom: 3px solid white; "><h1>Job Listing</h1>
+  <%= form_tag("jobpool/search", :method => "get") do %>
+      <%= label_tag(:searchText, "Search:") %>&nbsp;<%= text_field_tag(:searchText) %>&nbsp;<%= submit_tag("Search") %>
+  <% end %>
+  <br>
+</div>
+<br>
+<% @jobs.each do |job| %>
+    <div class="entry">
+      <div style="float:left;height:20px;color: white; font-family: sans-serif;padding-top:5px;align:center;">
+        <h3><%="Job Title: "+ job.name %></h3>
+      </div>
+      <div style="float:left;height:20px;padding-top:15px;padding-left:5px;align:center;">
+        <% if user_signed_in? %>
+            <% if job.applied_by(@user) %>
+                <% if !job.outdated %>
+                    <%= button_to 'Apply',new_jobapplication_path(:job_id=>job) %>
+                <% else %>
+                <div style="padding-top:5px; padding-left:10px; font: bold 120% sans-serif; color:black;"<p>Job is out of date</p></div>
+                <% end %>
+            <% else  %>
+                <div style="padding-top:5px; padding-left:10px; font: bold 120% sans-serif; color:black;"<p> Applied</p></div>
+            <% end %>
+        <% elsif !employer_signed_in? and !admin_signed_in? %>
+            <%= button_to 'Apply',new_jobapplication_path(:job_id=>job) %>
+        <% end %>
+      </div>
+      <br>
+      <div style="padding-top:15px;margin-top: 13px;margin-left: 0px;font: bold 200% sans-serif;color:white; border-bottom: 1px solid white;">
+        <p>
+          <%= "Job Description: "+sanitize(job.content) %>
+          <br>
+            <%="Job Field: "+job.field %>
+          <br><%= "Employer: "+job.employer_name.to_s %><br>
+          <%= "Tags: "+job.tag %> <br>
+          <%="Deadline: "%> <%=job.deadline %></p>
+      </div>
+
+      </div>
+<% end %>

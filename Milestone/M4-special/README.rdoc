@@ -1,0 +1,87 @@
+/* test */
+== README
+
+This README would normally document whatever steps are necessary to get the application up and running.
+
+The Website link for DireWolf is 152.46.18.73:3000
+
+Feel free to contact jesse.xu.20@gmail.com if you have any questions.
+
+
+1. Search can be performed without logging in, search is on the all the fields including (title, description, field,  Employer ,Tags)
+   Search can be performed without case sensitive. eg.(if you search 'a', it will give you results for everything that includes 'a' and 'A'.
+
+2. Accounts can be deleted and modified by the Account holder
+   (If you want to delete Employer, you have to log into that employer account and delete it!)
+    
+3. A super admin: admin@admin.com cannot be modified
+
+   Admin accounts can create employers and admin accounts
+  
+   Admin can create new/update/delete categories.
+
+4. Employer account can only be created by admin accounts
+
+   An employer can create/edit/delete more than one job, add tags to them
+   (they can only modify the jobs they created,not others)
+   
+   An Employer can see the JobApplications on the Job(s) that they have created
+   
+   An Employer can update the status of the job applications on the job they posted
+  
+5. Job seekers can sign up using their emails.
+    
+   A job seeker can view related Jobs/Recommendations based on what jobs (s)he have applied to in the past
+
+   A job seeker can apply more than one jobs, (s)he can withdraw the application as well
+
+   A job seeker can not apply to the same job more than once, cannot apply for a job till logged in
+   
+   A job seeker can not apply for the job which has been out of date, however they can see that.
+
+6. Jobs  will be deleted upon delete of the Employer.
+    
+   Applications will be deleted if related Employer or Job seeker acccount has been deleted.
+
+7. Each controller and model have at least one test covering it
+
+=======
+Extra-point parts we've implemented:
+
+    1. Cucumber testing
+
+    2. Emails would be sent to the job seeker after the application status has been changed
+
+    3. Emails would be sent to the employer after getting an application of one the jobs he posted
+    
+    4. Jobs for which the application deadline has passed will not be displayed in recommedation jobs for job seeker.
+    
+    5. Case insensitive search
+
+Accounts for the Website:
+
+Admin:
+
+    admin@admin.com Password:12345678
+
+    admin2@admin.com Password:12345678
+
+Employer:
+
+    abc@yahoo.com Password:12345678
+
+    emp1ncsu@gmail.com Password:12345678
+
+    emp2ncsu@hotmail.com Password:12345678
+
+Job Seeker:
+
+    std1ncsu@hotmail.com Password:12345678
+
+Accounts for the email:(log in at the www.hotmail.com or mail.google.com )
+
+    std1ncsu@hotmail.com Password:project1
+
+    emp1ncsu@gmail.com Password:project1
+
+    emp2ncsu@hotmail.com Password:project1

@@ -1,0 +1,108 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+#banner {
+  background: #225378;
+  padding: 35px;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  border-bottom: 2px solid;
+
+  font: bold small-caps 50px/50px "utkal", serif;
+  color: white;
+  text-align: left;
+
+  img {
+    float: left;
+  }
+}
+
+#login{
+  text-align: right;
+  font: small-caps 15px/15px "utkal", sans-serif;
+}
+
+#notice {
+  color: orangered !important;
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+  font: bold smaller sans-serif;
+}
+
+#columns {
+  background: #1695A3;
+
+  #main {
+    margin-left: 0px;
+    padding: 1em;
+    background: purplebar;
+  }
+
+  #side {
+    float: right;
+    padding: 80px 20px 800px;
+    width: 200px;
+    background: #225378;
+
+    margin-top: 0px;
+    font: bold small-caps 40px/40px "Meera", serif;
+
+    ul {
+      padding: 10px;
+      margin-top: 0px;
+      li {
+        list-style: none;
+        a {
+          color: white;
+          font: bold 160% sans-serif;
+        }
+      }
+    }
+  }
+}
+.DireWolf_form {
+  fieldset {
+    background: #efe;
+    legend {
+      color: #dfd;
+      background: #141;
+      font-family: sans-serif;
+      padding: 0.2em 1em;
+    }
+  }
+  form {
+    label {
+      width: 5em;
+      float: left;
+      text-align: right;
+      padding-top: 0.2em;
+      margin-right: 0.1em;
+      display: block;
+    }
+
+    select, textarea, input {
+      margin-left: 0.5em;
+    }
+
+    .submit {
+      margin-left: 4em;
+    }
+    br {
+      display: none
+    }
+  }
+}

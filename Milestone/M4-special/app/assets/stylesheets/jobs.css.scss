@@ -1,0 +1,44 @@
+// Place all the styles related to the Jobs controller here.
+// They will automatically be included in application.css.scss.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.jobs {
+  table {
+    border-collapse: collapse;
+  }
+
+  table tr td {
+    padding: 5px;
+    vertical-align: top;
+  }
+
+  .list_description {
+    width: 60%;
+
+    dl {
+      margin: 0;
+    }
+
+    dt {
+      color:        #258;
+      font-weight:  bold;
+      font-size:    larger;
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  .list_actions {
+    font-size:    x-small;
+    text-align:   right;
+    padding-left: 1em;
+  }
+
+  .list_line_even {
+    background:  #1695A3;
+  }
+  .list_line_odd {
+    background:   #1695A3;
+  }
+}

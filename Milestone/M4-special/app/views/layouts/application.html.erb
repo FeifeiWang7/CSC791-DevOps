@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+  <title>DireWolfJobPortal</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class='<%= controller_name %>'>
+
+  <div id="banner">
+    <%= @page_title || "Direwolf Job Portal" %>
+    <p class="navbar-text pull-right">
+    <div style="background: #225378 color: white"><div id="login">
+      <div style="padding-right:40px; color: #000000">
+        <% if not admin_signed_in? and not employer_signed_in? %>
+            <% if user_signed_in?%>
+                <font color=#ffe4c4>Logged in as: <strong><%= current_user.email %></strong></font>
+                <%= link_to 'Delete Account', user_registration_path, data: { confirm: "Are you sure?" }, method: :delete %>
+                <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+            <% else %>
+                <%= link_to "Job Seeker Login", new_user_session_path, :class => 'navbar-link'  %> |
+            <% end %>
+        <% end %>
+
+        <% if not admin_signed_in? and not user_signed_in? %>
+            <% if employer_signed_in? %>
+                <font color="#ffe4c4">Logged in as: <strong><%= current_employer.email %></strong>.</font>
+                <%= link_to 'Delete Account', employer_registration_path, data: { confirm: "Are you sure?" }, method: :delete %>
+                <%= link_to 'Edit profile', edit_employer_registration_path, :class => 'navbar-link' %> |
+                <%= link_to "Logout", destroy_employer_session_path, method: :delete, :class => 'navbar-link'  %>
+            <% else %>
+                <%= link_to "Employer Login", new_employer_session_path, :class => 'navbar-link'  %> |
+            <% end %>
+        <% end %>
+
+        <% if not employer_signed_in? and not user_signed_in? %>
+            <% if admin_signed_in? %>
+                <font color="#ffe4c4">Logged in as: <strong><%= current_admin.email %></strong>.</font>
+                <% if current_admin.email!="admin@admin.com"  %>
+                    <%= link_to 'Delete Account', admin_registration_path, data: { confirm: "Are you sure?" }, method: :delete %>
+                    <%= link_to 'Edit profile', edit_admin_registration_path, :class => 'navbar-link' %> |
+                <% end %>
+                <%= link_to "Create Employer", new_employer_registration_path, :class => 'navbar-link'  %>|
+                <%= link_to "Create Admin", new_admin_registration_path, :class => 'navbar-link'  %>
+                <%= link_to "Logout", destroy_admin_session_path, method: :delete, :class => 'navbar-link'  %>|
+            <% else %>
+                <%= link_to "Admin Login", new_admin_session_path, :class => 'navbar-link'  %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div id="columns">
+    <div id="side">
+      <ul>
+        <li><a href="http://52.6.120.225:3000">Home</a></li>
+        <% if employer_signed_in? %>
+        <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/jobs">Publish a Job/View Job Application</a></li></div>
+        <% end %>
+        <% if user_signed_in? %>
+        <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/jobapplications">Job You Have Applied</a></li></div>
+        <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/recommendation/view">Job Recommendations</a></li></div>
+        <% end %>
+        <% if admin_signed_in? %>
+            <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/account/view">Set up Account</a></li></div>
+            <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/categories">Add a Job Category</a></li></div>
+        <% end %>
+        <div style="padding-top:20px;"><li><a href="http://52.6.120.225:3000/contact/view">Contact Us and Login Info</a></li></div>
+      </ul>
+    </div>
+    <div id="main">
+      <%= yield %>
+    </div>
+  </div>
+  </body>
+</html>
